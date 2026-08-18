@@ -18,6 +18,16 @@ This plugin currently relies on DSH Web DOM details such as `data-chat-flow-kind
 
 ## Installation
 
+### One-shot AI install prompt
+
+Copy this prompt into your DSH coding agent:
+
+```text
+Install the DSH Web plugin from https://github.com/zisen123/dsh-reply-top-align. Read its INSTALL.md and follow it exactly. Install it into my user-local DSH home under local-plugins, add the plugin row to my active Web profile cordis.patch.yml, avoid shipped presets and DSH installation files, run the plugin syntax check, and tell me what to restart or refresh. Before editing files, explain the exact changes and ask for confirmation if my session rules require it.
+```
+
+### Manual install
+
 Clone or install this package somewhere accessible to your DSH profile, then add it to your host composition / web profile patch.
 
 Example `cordis.patch.yml` entry:
