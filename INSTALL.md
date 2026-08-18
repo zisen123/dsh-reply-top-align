@@ -92,17 +92,17 @@ If a row with `id: reply-top-align` already exists, update its `name` only if it
 
 Completion criterion: the Web profile patch contains exactly one `id: reply-top-align` row pointing at the cloned plugin directory.
 
-### 6. Validate and restart
+### 6. Validate hot reload and refresh
 
 At minimum, re-read the edited YAML and confirm the row is under `insert:`. If the environment provides a Cordis composition validation command or service, run it.
 
-Then tell the user:
+DSH supports hot reloading for this profile/composition change. Tell the user:
 
-1. Restart the existing `dsh web` process.
+1. Wait for the DSH Web profile/composition hot reload to settle.
 2. Refresh the DSH Web page.
 3. Test a long assistant response.
 
-Completion criterion: after restart and refresh, new assistant responses align their first visible text line to the top, and manual user scrolling disables forced alignment for the current response.
+Completion criterion: after hot reload and page refresh, new assistant responses align their first visible text line to the top, and manual user scrolling disables forced alignment for the current response.
 
 ## Verification checklist
 
@@ -125,11 +125,11 @@ Check:
 - The path contains `package.json`.
 - `package.json` exports `./client`.
 - `package.json` has a `dsh.client` block.
-- DSH Web was restarted after editing the profile.
+- The DSH Web profile/composition hot reload completed after editing the profile.
 
 ### The page still follows the bottom
 
-Check whether the browser loaded the client plugin after restart. If the dynamic old plugin was previously running, stop/restart DSH Web to distinguish the persisted plugin from the old runtime plugin.
+Check whether the browser loaded the client plugin after hot reload and page refresh. If a dynamic old plugin was previously running, stop that dynamic plugin or open a fresh session to distinguish the persisted plugin from the old runtime plugin.
 
 ### Manual scroll still gets pulled back
 
