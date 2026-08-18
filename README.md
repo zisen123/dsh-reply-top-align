@@ -14,6 +14,8 @@
 
 实验性社区插件。
 
+当前版本：`0.1.0`。
+
 本插件依赖 DSH Web 当前的 DOM 细节，例如 `data-chat-flow-kind="assistant-step"`、think 行标记，以及当前 markdown 正文的排版特征。若 DSH Web 后续调整会话 DOM 或样式，本插件可能需要同步更新。
 
 ## 安装
