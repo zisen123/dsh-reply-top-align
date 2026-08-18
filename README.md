@@ -1,83 +1,63 @@
 # dsh-reply-top-align
 
-A small DSH / DeepSeek Harness Cordis client plugin that aligns the first visible assistant reply text line to the top of the conversation viewport.
+一个 DSH / DeepSeek Harness Cordis Client 插件，用于改变 DSH Web 中 AI 回复的滚动对齐方式：让最新 assistant 回复的第一行可见正文对齐到会话视口顶部。
 
-By default, DSH Web follows the bottom of a streaming assistant response. This plugin changes that behavior for the latest assistant response:
+默认情况下，DSH Web 会跟随 streaming 回复的底部。本插件会改成：
 
-- align the first visible assistant **text** line to the top of the conversation viewport;
-- ignore tool-call rows;
-- ignore reasoning / think rows;
-- stop forcing alignment for the current assistant response after the user manually scrolls;
-- re-enable alignment for the next assistant response.
+- 将最新 assistant 回复的第一行可见 **正文文本** 对齐到会话视口顶部；
+- 忽略 tool-call 工具调用行；
+- 忽略 reasoning / think 思考行；
+- 用户手动滚动后，停止强制对齐当前这条 assistant 回复；
+- 下一条 assistant 回复出现时重新启用自动对齐。
 
-## Status
+## 状态
 
-Experimental community plugin.
+实验性社区插件。
 
-This plugin currently relies on DSH Web DOM details such as `data-chat-flow-kind="assistant-step"`, think row markers, and the current markdown text typography. It may need updates when DSH Web changes its conversation DOM or styling.
+本插件依赖 DSH Web 当前的 DOM 细节，例如 `data-chat-flow-kind="assistant-step"`、think 行标记，以及当前 markdown 正文的排版特征。若 DSH Web 后续调整会话 DOM 或样式，本插件可能需要同步更新。
 
-## Installation
+## 安装
 
-### One-shot AI install prompt
+### 一键交给 AI 安装
 
-Copy this prompt into your DSH coding agent:
+复制下面这段提示词给你的 DSH coding agent：
 
 ```text
-Install the DSH Web plugin from https://github.com/zisen123/dsh-reply-top-align. Read its INSTALL.md and follow it exactly. Install it into my user-local DSH home under local-plugins, add the plugin row to my active Web profile cordis.patch.yml, avoid shipped presets and DSH installation files, run the plugin syntax check, and tell me what to restart or refresh. Before editing files, explain the exact changes and ask for confirmation if my session rules require it.
+请安装这个 DSH Web 插件：https://github.com/zisen123/dsh-reply-top-align 。安装步骤请严格阅读并执行仓库中的 INSTALL.md。
 ```
 
-### Manual install
+详细安装步骤、校验清单和故障排查都在 [`INSTALL.md`](./INSTALL.md)。
 
-Clone or install this package somewhere accessible to your DSH profile, then add it to your host composition / web profile patch.
+## 开发
 
-Example `cordis.patch.yml` entry:
-
-```yaml
-- insert:
-  - id: reply-top-align
-    name: /absolute/path/to/dsh-reply-top-align
-```
-
-For a local DSH profile, one possible layout is:
-
-```yaml
-- insert:
-  - id: reply-top-align
-    name: /home/you/.dsh/local-plugins/dsh-reply-top-align
-```
-
-After changing the composition, restart `dsh web` and refresh the DSH Web page.
-
-## Development
-
-Check JavaScript syntax:
+检查 JavaScript 语法：
 
 ```bash
 npm run check
 ```
 
-## Compatibility
+## 兼容性
 
-Tested against a DSH Web build where assistant reply rows expose:
+当前版本基于以下 DSH Web 结构验证：
 
-- `data-chat-flow-kind="assistant-step"` for assistant text rows;
-- `data-variant="think"` for reasoning / think blocks;
-- a conversation input dock slot named `conversation.input.dock`.
+- `data-chat-flow-kind="assistant-step"` 表示 assistant 正文行；
+- `data-variant="think"` 表示 reasoning / think 块；
+- 存在名为 `conversation.input.dock` 的输入区 Slot。
 
-## Known limitations
+## 已知限制
 
-- This is a runtime UI enhancement, not a formal DSH Web scrolling API.
-- It uses DOM inspection and may break when DSH Web changes internal markup.
-- The text target detection currently uses typography heuristics (`font-size: 16px`, `line-height: 28px`) to distinguish the main markdown text container.
+- 这是运行时 UI 增强插件，不是正式 DSH Web 滚动 API。
+- 插件通过 DOM 检测实现，DSH Web 内部标记变化后可能失效。
+- 当前正文目标检测使用了排版启发式规则：`font-size: 16px`、`line-height: 28px`。
 
-## Suggested test cases
+## 建议测试场景
 
-- Plain text assistant response.
-- Assistant response with reasoning / think content.
-- Assistant response with tool calls before text.
-- Long streaming response.
-- Manual wheel / touch / keyboard scrolling during streaming.
-- Switching between conversations.
+- 普通文本回复；
+- 带 reasoning / think 内容的回复；
+- 正文前有 tool-call 的回复；
+- 长 streaming 回复；
+- streaming 期间手动滚轮 / 触摸 / 键盘滚动；
+- 切换会话。
 
 ## License
 
